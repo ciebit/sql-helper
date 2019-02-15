@@ -1,0 +1,30 @@
+{
+    "name": "ciebit/sql-helper",
+    "description": "Helper para montar fragmentos de querys SQL",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johnny Saymon",
+            "email": "saymon@ciebit.com",
+            "homepage": "http://saymon.ciebit.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4":{
+            "Ciebit\\SqlHelper\\": "source/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ciebit\\SqlHelper\\Tests\\": "tests/classes/"
+        }
+    },
+    "require": {
+        "php": "^7.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    }
+}
