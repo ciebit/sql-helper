@@ -7,9 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 class SqlTest extends TestCase
 {
-    public function testMethodsWithParams()
+    public function testMethodsWithParams(): void
     {
-        $sql = new Sql;
+        $sql = new Sql();
         $sql->addBind('key', PDO::PARAM_STR, 'value')
             ->addFilterBy('field_1', PDO::PARAM_STR, '=', 'value')
             ->addFilterBy('field_2', PDO::PARAM_STR, '=', 'value1', 'value2', 'value3')
@@ -30,5 +30,12 @@ class SqlTest extends TestCase
             $sql->generateSqlJoin()
         );
         $this->assertEquals('ORDER BY field_1 ASC', $sql->generateSqlOrder());
+    }
+
+    public function testFilterNull(): void
+    {
+        $sql = new Sql();
+        $sql->addFilterBy('field_1', PDO::PARAM_INT, '=');
+        $this->assertEquals('1', $sql->generateSqlFilters());
     }
 }

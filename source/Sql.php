@@ -53,6 +53,10 @@ class Sql
 
     public function addFilterBy(string $field, int $type, string $operator, ...$values): self
     {
+        if (empty($values)) {
+            return $this;
+        }
+
         if (count($values) > 1) {
             $operator = str_replace(['=', '!='], ['IN', 'NOT IN'], $operator);
             $keys = [];
@@ -112,9 +116,13 @@ class Sql
 
     public function generateSqlLimit(): string
     {
-        return $this->limit === null
+        $init = (int) $this->offset;
+        $sql =
+            $this->limit === null
             ? ''
-            : "LIMIT {$this->limit}";
+            : "LIMIT {$init},{$this->limit}";
+
+        return $sql;
     }
 
     public function generateSqlJoin(): string
@@ -124,12 +132,6 @@ class Sql
         }
 
         return implode(' ', $this->sqlJoin);
-    }
-
-    public function generateSqlOffset(): string
-    {
-        $init = (int) $this->offset;
-        return $init ? "OFFSET {$init}" : '';
     }
 
     public function generateSqlOrder(): string
