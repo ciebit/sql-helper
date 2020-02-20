@@ -112,12 +112,9 @@ class Sql
 
     public function generateSqlLimit(): string
     {
-        $init = (int) $this->offset;
-        $sql =
-            $this->limit === null
+        return $this->limit === null
             ? ''
-            : "LIMIT {$init},{$this->limit}";
-        return $sql;
+            : "LIMIT {$this->limit}";
     }
 
     public function generateSqlJoin(): string
@@ -127,6 +124,12 @@ class Sql
         }
 
         return implode(' ', $this->sqlJoin);
+    }
+
+    public function generateSqlOffset(): string
+    {
+        $init = (int) $this->offset;
+        return $init ? "OFFSET {$init}" : '';
     }
 
     public function generateSqlOrder(): string
